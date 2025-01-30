@@ -23,9 +23,14 @@ export default function ScrollytellingTable() {
   const [activeChapter, setActiveChapter] = useState(0);
 
   useEffect(() => {
-    // Reset scroll to top and activeChapter when component mounts
+    // Ensure page always starts at the top
     window.scrollTo(0, 0);
     setActiveChapter(0);
+
+    // Delay to let GSAP detect the correct position
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100); // Slight delay ensures correct detection
 
     // Clear existing ScrollTriggers before setting up new ones
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -34,7 +39,7 @@ export default function ScrollytellingTable() {
     chapterList.forEach((_, index) => {
       ScrollTrigger.create({
         trigger: `#chapter-${index}`,
-        start: "top 75%",  // Triggers earlier to reduce scroll distance
+        start: "top 75%", // Triggers earlier to reduce scroll distance
         end: "bottom 25%",
         onEnter: () => setActiveChapter(index), // Trigger when scrolling down
         onLeaveBack: () => setActiveChapter(index - 1 >= 0 ? index - 1 : 0) // Properly update when scrolling up
@@ -63,10 +68,10 @@ export default function ScrollytellingTable() {
             size={{ base: "md", md: "lg", lg: "xl" }} 
             color={colors.heading} 
             fontFamily="'Optimus Princeps', serif"
-            maxWidth={{ base: "90%", md: "80%", lg: "70%" }} // Allows heading to expand on wider screens
-            mx="auto" // Centers the heading
+            maxWidth={{ base: "90%", md: "80%", lg: "70%" }}
+            mx="auto"
           >
-            WHO THE HELL IS THAT FOURTH WING CHARACTER AGAIN?
+            WHO IS THAT FOURTH WING CHARACTER AGAIN?
           </Heading>
 
           <Text fontSize="sm" color={colors.text}>
@@ -81,8 +86,8 @@ export default function ScrollytellingTable() {
             <Table variant="simple" colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Character</Th>
-                  {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragon</Th>} {/* Show column only in Chapter 5 */}
+                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Name</Th>
+                  {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragon</Th>}
                 </Tr>
               </Thead>
               <Tbody>
