@@ -66,7 +66,7 @@ export default function ScrollytellingTable() {
             maxWidth={{ base: "90%", md: "80%", lg: "70%" }} // Allows heading to expand on wider screens
             mx="auto" // Centers the heading
           >
-            Who the hell is that Fourth Wing character again?
+            WHO THE HELL IS THAT FOURTH WING CHARACTER AGAIN?
           </Heading>
 
           <Text fontSize="sm" color={colors.text}>
@@ -81,7 +81,7 @@ export default function ScrollytellingTable() {
             <Table variant="simple" colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Name</Th>
+                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Character</Th>
                   {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragon</Th>} {/* Show column only in Chapter 5 */}
                 </Tr>
               </Thead>
