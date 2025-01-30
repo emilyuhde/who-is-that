@@ -1,14 +1,21 @@
+/* Import fonts */
+@import url('https://fonts.cdnfonts.com/css/optimus-princeps');
+
+/* Global styles */
 body {
-  background: transparent; /* Make it white if you need */
-  padding: 0 24px;
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #0F0706; /* Smoky Black */
+    color: white;
+    font-family: 'Animosa', sans-serif;
 }
 
-.App {
-  color: #72a24d;
+/* Apply Optimus Princeps to headers */
+h1, h2, h3, .chapter-title {
+    font-family: 'Optimus Princeps', serif;
+    color: #291f1a; /* lighter Smoky Black */
+}
+
+/* Apply Animosa to all other text */
+p, td, th {
+    font-family: 'Animosa', sans-serif;
+    color: white;
 }
