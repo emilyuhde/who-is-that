@@ -63,7 +63,7 @@ export default function ScrollytellingTable() {
       {/* Sticky Section with Heading and Table */}
       <Box position="sticky" top="10px" zIndex="10" width="100%" maxWidth="80%" p={4} textAlign="center">
         <VStack spacing={4} width="100%">
-          {/* Main Title with Optimus Princeps Font - Responsive Width */}
+          {/* Dynamic Header with Book Name */}
           <Heading 
             size={{ base: "md", md: "lg", lg: "xl" }} 
             color={colors.heading} 
@@ -71,7 +71,7 @@ export default function ScrollytellingTable() {
             maxWidth={{ base: "90%", md: "80%", lg: "70%" }}
             mx="auto"
           >
-            WHO IS THAT FOURTH WING CHARACTER AGAIN?
+            WHO IS THAT {chapterList[activeChapter].book} CHARACTER AGAIN?
           </Heading>
 
           <Text fontSize="sm" color={colors.text}>
@@ -86,8 +86,8 @@ export default function ScrollytellingTable() {
             <Table variant="simple" colorScheme="whiteAlpha">
               <Thead>
                 <Tr>
-                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Name</Th>
-                  {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragon</Th>}
+                  <Th color={colors.text} borderBottom="2px solid #F1CC69">Characters</Th>
+                  {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragons</Th>}
                 </Tr>
               </Thead>
               <Tbody>
@@ -128,10 +128,10 @@ export default function ScrollytellingTable() {
         zIndex="20"
       >
         <Text fontSize="sm" color={colors.footerText}>
-          Fourth Wing and all related characters belong to <b>Rebecca Yarros</b>. This website was created by{" "}
-          <Link href="https://github.com/emilyuhde/who-is-that" color={colors.footerText} isExternal>
+          Fourth Wing and all related characters belong to <b><Link href="https://rebeccayarros.com/fourthwing" color={colors.footerText} isExternal>Rebecca Yarros</Link></b>. This website was created by{" "}
+          <b><Link href="https://github.com/emilyuhde/who-is-that" color={colors.footerText} isExternal>
             @emilyuhde
-          </Link>.
+          </Link></b>.
         </Text>
       </Box>
     </Box>
