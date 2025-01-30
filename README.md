@@ -1,6 +1,6 @@
 # who-is-that
 
-Empty project.
+Who the hell was that Fourth Wing character again? And who does this dragon that showed up belong with? Help!
 
 ## How to run on localhost
 
