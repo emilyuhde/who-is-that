@@ -102,20 +102,53 @@ export default function ScrollytellingTable() {
               <Heading size="lg" color={colors.chapterTitle} fontFamily="'Optimus Princeps', serif">
                 {chapterList[activeChapter].title}
               </Heading>
-              <Table variant="simple" colorScheme="whiteAlpha">
+              <Table 
+                variant="simple" 
+                colorScheme="whiteAlpha" 
+                tableLayout="fixed" // Ensures strict column widths
+                width="100%"
+              >
                 <Thead>
                   <Tr>
-                    <Th color={colors.text} borderBottom="2px solid #F1CC69">Characters</Th>
-                    {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragons</Th>}
+                    <Th 
+                      color={colors.text} 
+                      borderBottom="2px solid #F1CC69"
+                      width="50%" // Ensures "Characters" column is always 50%
+                      whiteSpace="nowrap"
+                    >
+                      Characters
+                    </Th>
+                    {showDragonColumn && (
+                      <Th 
+                        color={colors.text} 
+                        borderBottom="2px solid #F1CC69"
+                        width="50%" // Ensures "Dragons" column is also 50%
+                        whiteSpace="nowrap"
+                      >
+                        Dragons
+                      </Th>
+                    )}
                   </Tr>
                 </Thead>
                 <Tbody>
                   {(chapterList[activeChapter]?.data || []).map((entry, idx) => (
                     <Tr key={idx}>
-                      <Td color={colors.text}>
+                      <Td 
+                        color={colors.text} 
+                        width="50%" // Always 50% width
+                        whiteSpace="nowrap"
+                      >
                         {entry.name.includes("~") ? <s>{entry.name.replace(/~/g, "")}</s> : entry.name}
                       </Td>
-                      {showDragonColumn && <Td color={colors.text}>{entry.dragon || ""}</Td>}
+                      {showDragonColumn && (
+                        <Td 
+                          color={colors.text} 
+                          width="50%" // Always 50% width
+                          whiteSpace="nowrap"
+                        >
+                          {entry.dragon || ""}
+                        </Td>
+                      )}
                     </Tr>
                   ))}
                 </Tbody>
@@ -133,27 +166,6 @@ export default function ScrollytellingTable() {
               </Heading>
             </Box>
           ))}
-        </Box>
-
-        {/* Sticky Footer Section */}
-        <Box 
-          as="footer" 
-          position="fixed" 
-          bottom="0" 
-          width="100%" 
-          textAlign="center" 
-          py={2} 
-          bg={colors.background} 
-          zIndex="20"
-          px="env(safe-area-inset-left)"  // Ensures footer stays inside safe area
-          pr="env(safe-area-inset-right)"
-        >
-          <Text fontSize="sm" color={colors.footerText}>
-            Fourth Wing and all related characters belong to <b><Link href="https://rebeccayarros.com/fourthwing" color={colors.footerText} isExternal>Rebecca Yarros</Link></b>. This website was created by{" "}
-            <b><Link href="https://github.com/emilyuhde/who-is-that" color={colors.footerText} isExternal>
-              @emilyuhde
-            </Link></b>.
-          </Text>
         </Box>
       </Box>
     </>
