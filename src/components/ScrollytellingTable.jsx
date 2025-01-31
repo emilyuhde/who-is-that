@@ -30,9 +30,9 @@ export default function ScrollytellingTable() {
     // Delay to let GSAP detect the correct position
     setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 100); // Slight delay ensures correct detection
+    }, 100); // Ensures correct detection
 
-    // Clear existing ScrollTriggers before setting up new ones
+    // Clear all previous ScrollTriggers
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
     // Setup GSAP ScrollTrigger for all chapters
@@ -46,16 +46,16 @@ export default function ScrollytellingTable() {
       });
     });
 
-    // Special case for ensuring Chapter 1 gets reset when scrolling up
+    // Ensure Chapter 1 gets reset when scrolling back up
     ScrollTrigger.create({
       trigger: `#chapter-0`,
       start: "top top",
-      onEnterBack: () => setActiveChapter(0) // Ensures returning to Chapter 1
+      onEnterBack: () => setActiveChapter(0) // Resets to Chapter 1
     });
 
   }, []);
 
-  // Check if Chapter 5 is active to show "Dragon" column
+  // Ensure the Dragons column appears only from Chapter 5 onward
   const showDragonColumn = activeChapter >= 4; // Index 4 is Chapter 5
 
   return (
@@ -76,7 +76,7 @@ export default function ScrollytellingTable() {
         display="flex" 
         flexDirection="column" 
         alignItems="center"
-        px="env(safe-area-inset-left)"  // Ensures content stays inside safe area
+        px="env(safe-area-inset-left)"  // Keeps content inside safe area
         pr="env(safe-area-inset-right)"
       >
         {/* Sticky Section with Heading and Table */}
@@ -85,7 +85,7 @@ export default function ScrollytellingTable() {
           top="10px" 
           zIndex="10" 
           width="100%" 
-          maxWidth={{ base: "95%", md: "90%", lg: "80%" }} // Responsive max width
+          maxWidth={{ base: "95%", md: "90%", lg: "80%" }} // Keeps responsive width behavior
           p={4} 
           textAlign="center"
         >
@@ -95,10 +95,10 @@ export default function ScrollytellingTable() {
               size={{ base: "md", md: "lg", lg: "xl" }} 
               color={colors.heading} 
               fontFamily="'Optimus Princeps', serif"
-              maxWidth={{ base: "90%", md: "80%", lg: "70%" }}
+              maxWidth={{ base: "95%", md: "90%", lg: "90%" }}
               mx="auto"
             >
-              WHO IS THAT {chapterList[activeChapter].book} CHARACTER AGAIN?
+              WHO IS THAT {chapterList[activeChapter].book} CHARACTER?
             </Heading>
 
             <Text fontSize="sm" color={colors.text}>
@@ -110,20 +110,55 @@ export default function ScrollytellingTable() {
               <Heading size="lg" color={colors.chapterTitle} fontFamily="'Optimus Princeps', serif">
                 {chapterList[activeChapter].title}
               </Heading>
-              <Table variant="simple" colorScheme="whiteAlpha">
+              <Table 
+                variant="simple" 
+                colorScheme="whiteAlpha" 
+                tableLayout="fixed" // Ensures columns are 50% width at all times
+                width="100%"
+              >
                 <Thead>
                   <Tr>
-                    <Th color={colors.text} borderBottom="2px solid #F1CC69">Characters</Th>
-                    {showDragonColumn && <Th color={colors.text} borderBottom="2px solid #F1CC69">Dragons</Th>}
+                    <Th 
+                      color={colors.text} 
+                      borderBottom="2px solid #F1CC69"
+                      width="50%"
+                      minWidth="50%"
+                      textAlign="left"
+                    >
+                      Characters
+                    </Th>
+                    <Th 
+                      color={colors.text} 
+                      borderBottom="2px solid #F1CC69"
+                      width="50%"
+                      minWidth="50%"
+                      textAlign="left"
+                      display={showDragonColumn ? "table-cell" : "none"} // Hides until Chapter 5
+                    >
+                      Dragons
+                    </Th>
                   </Tr>
                 </Thead>
                 <Tbody>
                   {(chapterList[activeChapter]?.data || []).map((entry, idx) => (
                     <Tr key={idx}>
-                      <Td color={colors.text}>
+                      <Td 
+                        color={colors.text} 
+                        width="50%"
+                        minWidth="50%"
+                        textAlign="left"
+                      >
                         {entry.name.includes("~") ? <s>{entry.name.replace(/~/g, "")}</s> : entry.name}
                       </Td>
-                      {showDragonColumn && <Td color={colors.text}>{entry.dragon || ""}</Td>}
+                      <Td 
+                        color={colors.text} 
+                        width="50%"
+                        minWidth="50%"
+                        textAlign="left"
+                        display={showDragonColumn ? "table-cell" : "none"}
+                      >
+                        {entry.dragon || "\u00A0"} {/* Non-breaking space prevents shifting */}
+                      </Td>
                     </Tr>
                   ))}
                 </Tbody>
@@ -132,7 +167,7 @@ export default function ScrollytellingTable() {
           </VStack>
         </Box>
 
-        {/* Scroll Sections - Reduced Scroll Distance */}
+        {/* Scroll Sections - Properly Reduced Scroll Distance */}
         <Box h="200vh" display="flex" flexDirection="column" justifyContent="center" gap="16">
           {chapterList.map((chapter, index) => (
             <Box key={index} id={`chapter-${index}`} h="50vh" display="flex" alignItems="center" justifyContent="center">
@@ -141,27 +176,6 @@ export default function ScrollytellingTable() {
               </Heading>
             </Box>
           ))}
-        </Box>
-
-        {/* Sticky Footer Section */}
-        <Box 
-          as="footer" 
-          position="fixed" 
-          bottom="0" 
-          width="100%" 
-          textAlign="center" 
-          py={2} 
-          bg={colors.background} 
-          zIndex="20"
-          px="env(safe-area-inset-left)"  // Ensures footer stays inside safe area
-          pr="env(safe-area-inset-right)"
-        >
-          <Text fontSize="sm" color={colors.footerText}>
-            Fourth Wing and all related characters belong to <b><Link href="https://rebeccayarros.com/fourthwing" color={colors.footerText} isExternal>Rebecca Yarros</Link></b>. This website was created by{" "}
-            <b><Link href="https://github.com/emilyuhde/who-is-that" color={colors.footerText} isExternal>
-              @emilyuhde
-            </Link></b>.
-          </Text>
         </Box>
       </Box>
     </>
